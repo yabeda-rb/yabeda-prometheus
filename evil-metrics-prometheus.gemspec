@@ -6,7 +6,7 @@ require "evil/metrics/prometheus/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "evil-metrics-prometheus"
-  spec.version       = "0.1.0"
+  spec.version       = Evil::Metrics::Prometheus::VERSION
   spec.authors       = ["Andrey Novikov"]
   spec.email         = ["envek@envek.name"]
 
