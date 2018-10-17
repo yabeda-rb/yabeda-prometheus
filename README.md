@@ -1,4 +1,4 @@
-# Evil::Metrics::[Prometheus]
+# Yabeda::[Prometheus]
 
 Adapter for easy exporting your collected evil metrics from your application to the [Prometheus]!
 
@@ -12,9 +12,9 @@ Adapter for easy exporting your collected evil metrics from your application to 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'evil-metrics'
+gem 'yabeda'
 # Then add monitoring system adapter, e.g.:
-# gem 'evil-metrics-prometheus'
+# gem 'yabeda-prometheus'
 ```
 
 And then execute:
@@ -28,7 +28,7 @@ And then execute:
     Place following in your `config.ru` _before_ running your application:
 
     ```ruby
-    use Evil::Metrics::Prometheus::Exporter
+    use Yabeda::Prometheus::Exporter
     ```
 
     Metrics will be available on `/metrics` path.
@@ -36,12 +36,12 @@ And then execute:
  2. Run web-server from long-running processes (delayed jobs, …):
 
     ```ruby
-    Evil::Metrics::Prometheus::Exporter.start_metrics_server!
+    Yabeda::Prometheus::Exporter.start_metrics_server!
     ```
 
     WEBrick will be launched in separate thread and will serve metrics on `/metrics` path.
 
-    See [evil-metrics-sidekiq] for example.
+    See [yabeda-sidekiq] for example.
 
     Listening address is configured via `PROMETHEUS_EXPORTER_BIND` env variable (default is `0.0.0.0`).
 
@@ -50,7 +50,7 @@ And then execute:
  3. Use push gateway for short living things (rake tasks, cron jobs, …):
 
     ```ruby
-    Evil::Metrics::Prometheus.push_gateway.add(Evil::Metrics::Prometheus.registry)
+    Yabeda::Prometheus.push_gateway.add(Yabeda::Prometheus.registry)
     ```
 
     Address of push gateway is configured with `PROMETHEUS_PUSH_GATEWAY` env variable.
@@ -63,11 +63,11 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/evil-metrics/evil-metrics-prometheus.
+Bug reports and pull requests are welcome on GitHub at https://github.com/yabeda-rb/yabeda-prometheus.
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
 [Prometheus]: https://prometheus.io/ "Open-source monitoring solution"
-[evil-metrics-sidekiq]: https://github.com/evil-metrics/evil-metrics-sidekiq
+[yabeda-sidekiq]: https://github.com/yabeda-rb/yabeda-sidekiq
