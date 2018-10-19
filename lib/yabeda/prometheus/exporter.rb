@@ -8,7 +8,7 @@ module Yabeda
       class << self
         def start_metrics_server!
           Thread.new do
-            default_port = ENV.fetch("PORT", 9310)
+            default_port = ENV.fetch("PORT", 9394)
             Rack::Handler::WEBrick.run(
               rack_app,
               Host: ENV["PROMETHEUS_EXPORTER_BIND"] || "0.0.0.0",
