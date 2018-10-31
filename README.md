@@ -1,6 +1,13 @@
 # Yabeda::[Prometheus]
 
-Adapter for easy exporting your collected evil metrics from your application to the [Prometheus]!
+[![Gem Version](https://badge.fury.io/rb/yabeda-prometheus.svg)](https://rubygems.org/gems/yabeda-prometheus)
+
+Adapter for easy exporting your collected metrics from your application to the [Prometheus]!
+
+<a href="https://evilmartians.com/?utm_source=yabeda-prometheus&utm_campaign=project_page">
+<img src="https://evilmartians.com/badges/sponsored-by-evil-martians.svg" alt="Sponsored by Evil Martians" width="236" height="54">
+</a>
+
 
 ## One more? Why not X?
 
@@ -12,9 +19,7 @@ Adapter for easy exporting your collected evil metrics from your application to 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'yabeda'
-# Then add monitoring system adapter, e.g.:
-# gem 'yabeda-prometheus'
+gem 'yabeda-prometheus'
 ```
 
 And then execute:
