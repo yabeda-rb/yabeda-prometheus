@@ -36,7 +36,9 @@ And then execute:
     use Yabeda::Prometheus::Exporter
     ```
 
-    Metrics will be available on `/metrics` path.
+    Metrics will be available on `/metrics` path (configured by `:path` option).
+
+    Also you can mount it in Rails application routes as standalone Rack application.
 
  2. Run web-server from long-running processes (delayed jobs, …):
 

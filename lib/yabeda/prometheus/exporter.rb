@@ -4,8 +4,19 @@ require "prometheus/middleware/exporter"
 
 module Yabeda
   module Prometheus
+    # Rack application or middleware that provides metrics exposition endpoint
     class Exporter < ::Prometheus::Middleware::Exporter
+      NOT_FOUND_HANDLER = lambda do |_env|
+        [404, { "Content-Type" => "text/plain" }, ["Not Found\n"]]
+      end.freeze
+
       class << self
+        # Allows to use middleware as standalone rack application
+        def call(env)
+          @app ||= new(NOT_FOUND_HANDLER, path: "/")
+          @app.call(env)
+        end
+
         def start_metrics_server!
           Thread.new do
             default_port = ENV.fetch("PORT", 9394)
@@ -18,24 +29,22 @@ module Yabeda
           end
         end
 
-        protected
-
-        def rack_app(exporter = self)
+        def rack_app(exporter = self, path: "/metrics")
           Rack::Builder.new do
             use Rack::CommonLogger
             use Rack::ShowExceptions
-            use exporter, registry: Yabeda::Prometheus.registry
-            run ->(_env) do
-              [404, { "Content-Type" => "text/plain" }, ["Not Found\n"]]
-            end
+            use exporter, path: path
+            run NOT_FOUND_HANDLER
           end
         end
       end
 
+      def initialize(app, options = {})
+        super(app, options.merge(registry: Yabeda::Prometheus.registry))
+      end
+
       def call(env)
-        if env["REQUEST_PATH"].start_with?(path)
-          Yabeda.collectors.each(&:call)
-        end
+        Yabeda.collectors.each(&:call) if env["PATH_INFO"] == path
         super
       end
     end
