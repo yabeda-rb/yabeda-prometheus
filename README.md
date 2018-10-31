@@ -52,7 +52,7 @@ And then execute:
 
     Listening address is configured via `PROMETHEUS_EXPORTER_BIND` env variable (default is `0.0.0.0`).
 
-    Port is configured by `PROMETHEUS_EXPORTER_PORT` or `PORT` variables (default is `9310`).
+    Port is configured by `PROMETHEUS_EXPORTER_PORT` or `PORT` variables (default is `9394`).
 
  3. Use push gateway for short living things (rake tasks, cron jobs, …):
 
