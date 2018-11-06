@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "yabeda"
+require "prometheus/client"
 require "yabeda/prometheus/version"
 require "yabeda/prometheus/adapter"
 require "yabeda/prometheus/exporter"

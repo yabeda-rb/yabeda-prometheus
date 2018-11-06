@@ -16,9 +16,10 @@ Adapter for easy exporting your collected metrics from your application to the [
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this lines to your application's Gemfile:
 
 ```ruby
+gem 'prometheus-client' # Or 'prometheus-client-mmap' if you need multi-process support
 gem 'yabeda-prometheus'
 ```
 

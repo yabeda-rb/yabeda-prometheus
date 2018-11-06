@@ -1,11 +1,19 @@
 # frozen_string_literal: true
 
-require "prometheus/middleware/exporter"
+begin
+  # Try to load exporter from GitLab's prometheus-client-mmap gem
+  require "prometheus/client/rack/exporter"
+  BASE_EXPORTER_CLASS = ::Prometheus::Client::Rack::Exporter
+rescue LoadError
+  # Try to load exporter from original prometheus-client
+  require "prometheus/middleware/exporter"
+  BASE_EXPORTER_CLASS = ::Prometheus::Middleware::Exporter
+end
 
 module Yabeda
   module Prometheus
     # Rack application or middleware that provides metrics exposition endpoint
-    class Exporter < ::Prometheus::Middleware::Exporter
+    class Exporter < BASE_EXPORTER_CLASS
       NOT_FOUND_HANDLER = lambda do |_env|
         [404, { "Content-Type" => "text/plain" }, ["Not Found\n"]]
       end.freeze
