@@ -26,7 +26,7 @@ module Yabeda
       registry.gauge(build_name(metric), metric.comment)
     end
 
-    def perform_gauge_set!(metric)
+    def perform_gauge_set!(metric, tags, value)
       registry.get(build_name(metric)).set(tags, value)
     end
 
