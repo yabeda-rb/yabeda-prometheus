@@ -3,9 +3,6 @@
 require "prometheus/client"
 require "yabeda/base_adapter"
 
-require_relative "./counter_wrapper"
-require_relative "./gauge_wrapper"
-
 module Yabeda
   class Prometheus::Adapter < BaseAdapter
     def registry
