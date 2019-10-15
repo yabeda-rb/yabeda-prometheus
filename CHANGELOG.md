@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 0.1.5 - 2019-10-15
+
+### Fixed
+
+ - Issue [#7](https://github.com/yabeda-rb/yabeda-prometheus/issues/7) with counters and gauges when using prometheus-client-mmap gem. Fixed in [#8](https://github.com/yabeda-rb/yabeda-prometheus/pull/8) by [@alexander37137]
+
 
 ## 0.1.4 - 2018-11-06
 
@@ -57,3 +63,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## 0.1.0 - 2018-10-03
 
  - Initial release of evil-metrics-prometheus gem. @Envek
+
+[@alexander37137]: https://github.com/alexander37137 "Alexander Andreev"
