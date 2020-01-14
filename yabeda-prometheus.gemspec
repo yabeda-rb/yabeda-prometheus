@@ -25,13 +25,10 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "yabeda"
+  spec.required_ruby_version = ">= 2.3"
 
-  spec.post_install_message = <<~MESSAGE
-    You need to have installed either prometheus-client or prometheus-client-mmap
-    gem for yabeda-prometheus to work.
-    Please make sure that you have added one of them to your Gemfile.
-  MESSAGE
+  spec.add_dependency "prometheus-client", "~> 1.0"
+  spec.add_dependency "yabeda", "~> 0.2"
 
   spec.add_development_dependency "bundler", "~> 1.17"
   spec.add_development_dependency "rake", "~> 12.0"

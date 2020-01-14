@@ -16,10 +16,9 @@ Adapter for easy exporting your collected metrics from your application to the [
 
 ## Installation
 
-Add this lines to your application's Gemfile:
+Add this line to your application's Gemfile:
 
 ```ruby
-gem 'prometheus-client' # Or 'prometheus-client-mmap' if you need multi-process support
 gem 'yabeda-prometheus'
 ```
 
@@ -62,6 +61,17 @@ And then execute:
     ```
 
     Address of push gateway is configured with `PROMETHEUS_PUSH_GATEWAY` env variable.
+
+
+## Multi-process server support
+
+To use Unicorn or Puma in clustered mode, you'll want to set up underlying prometheus-client gem to use `DirectFileStore`, which aggregates metrics across the processes.
+
+```ruby
+Prometheus::Client.config.data_store = Prometheus::Client::DataStores::DirectFileStore.new(dir: '/tmp/prometheus_direct_file_store')
+```
+
+See more information at [prometheus-client README](https://github.com/prometheus/client_ruby#data-stores).
 
 ## Development
 
