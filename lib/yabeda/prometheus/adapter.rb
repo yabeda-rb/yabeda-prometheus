@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require "prometheus/client"
+require 'prometheus/client/data_stores/direct_file_store'
+require 'prometheus/client/data_stores/single_threaded'
 require "yabeda/base_adapter"
 
 module Yabeda
@@ -23,7 +25,12 @@ module Yabeda
 
     def register_counter!(metric)
       validate_metric!(metric)
-      registry.counter(build_name(metric), docstring: metric.comment, labels: Array(metric.tags))
+      registry.counter(
+        build_name(metric),
+        docstring: metric.comment,
+        labels: Array(metric.tags),
+        store_settings: store_settings(metric),
+      )
     end
 
     def perform_counter_increment!(metric, tags, value)
@@ -34,7 +41,12 @@ module Yabeda
 
     def register_gauge!(metric)
       validate_metric!(metric)
-      registry.gauge(build_name(metric), docstring: metric.comment, labels: Array(metric.tags))
+      registry.gauge(
+        build_name(metric),
+        docstring: metric.comment,
+        labels: Array(metric.tags),
+        store_settings: store_settings(metric),
+      )
     end
 
     def perform_gauge_set!(metric, tags, value)
@@ -46,7 +58,13 @@ module Yabeda
     def register_histogram!(metric)
       validate_metric!(metric)
       buckets = metric.buckets || ::Prometheus::Client::Histogram::DEFAULT_BUCKETS
-      registry.histogram(build_name(metric), docstring: metric.comment, buckets: buckets, labels: Array(metric.tags))
+      registry.histogram(
+        build_name(metric),
+        docstring: metric.comment,
+        buckets: buckets,
+        labels: Array(metric.tags),
+        store_settings: store_settings(metric),
+      )
     end
 
     def perform_histogram_measure!(metric, tags, value)
@@ -63,6 +81,19 @@ module Yabeda
       return if metric.comment
 
       raise ArgumentError, 'Prometheus require metrics to have comments'
+    end
+
+    private
+
+    # @param metric [Yabeda::Metric]
+    # @return [Hash]
+    def store_settings(metric)
+      case ::Prometheus::Client.config.data_store
+      when ::Prometheus::Client::DataStores::Synchronized, ::Prometheus::Client::DataStores::SingleThreaded
+        {} # Default synchronized store doesn't allow to pass any options
+      when ::Prometheus::Client::DataStores::DirectFileStore, ::Object # Anything else
+        { aggregation: metric.aggregation }.compact
+      end
     end
 
     Yabeda.register_adapter(:prometheus, new)

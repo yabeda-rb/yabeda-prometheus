@@ -73,6 +73,19 @@ Prometheus::Client.config.data_store = Prometheus::Client::DataStores::DirectFil
 
 See more information at [prometheus-client README](https://github.com/prometheus/client_ruby#data-stores).
 
+### Aggregation settings
+
+You can specify aggregation policy in gauges declaration:
+
+```ruby
+group :some do
+  gauge :tasks do
+    comment "Number of test tasks"
+    aggregation :max
+  end
+end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
