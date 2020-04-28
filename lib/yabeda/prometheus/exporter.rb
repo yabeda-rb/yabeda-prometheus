@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "prometheus/middleware/exporter"
+require "rack"
 
 module Yabeda
   module Prometheus
