@@ -2,6 +2,7 @@
 
 require "yabeda"
 require "prometheus/client"
+require "prometheus/client/push"
 require "yabeda/prometheus/version"
 require "yabeda/prometheus/adapter"
 require "yabeda/prometheus/exporter"
