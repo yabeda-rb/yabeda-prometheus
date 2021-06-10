@@ -1,4 +1,4 @@
-# Yabeda::[Prometheus]
+# ![`Yabeda::Prometheus`](./yabeda-prometheus-logo.png)
 
 [![Gem Version](https://badge.fury.io/rb/yabeda-prometheus.svg)](https://rubygems.org/gems/yabeda-prometheus)
 
