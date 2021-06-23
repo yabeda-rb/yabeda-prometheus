@@ -21,7 +21,7 @@ module Yabeda
         def start_metrics_server!
           Thread.new do
             default_port = ENV.fetch("PORT", 9394)
-            Rack::Handler::WEBrick.run(
+            ::Rack::Handler::WEBrick.run(
               rack_app,
               Host: ENV["PROMETHEUS_EXPORTER_BIND"] || "0.0.0.0",
               Port: ENV.fetch("PROMETHEUS_EXPORTER_PORT", default_port),
@@ -31,9 +31,9 @@ module Yabeda
         end
 
         def rack_app(exporter = self, path: "/metrics")
-          Rack::Builder.new do
-            use Rack::CommonLogger
-            use Rack::ShowExceptions
+          ::Rack::Builder.new do
+            use ::Rack::CommonLogger
+            use ::Rack::ShowExceptions
             use exporter, path: path
             run NOT_FOUND_HANDLER
           end
