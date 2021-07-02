@@ -18,7 +18,7 @@ module Yabeda
           @app.call(env)
         end
 
-        def start_metrics_server!
+        def start_metrics_server!(debug_mode: false)
           Thread.new do
             default_port = ENV.fetch("PORT", 9394)
             ::Rack::Handler::WEBrick.run(
@@ -45,8 +45,36 @@ module Yabeda
       end
 
       def call(env)
-        Yabeda.collectors.each(&:call) if env["PATH_INFO"] == path
-        super
+        if env['PATH_INFO'] == path
+          ::Yabeda.collectors.each do |collector|
+            if ::Yabeda::Prometheus.debug_mode?
+              start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+              collector.call
+              time = (Process.clock_gettime(Process::CLOCK_MONOTONIC) - start).round(3)
+              ::Yabeda.prometheus_exporter.collect_duration.measure(
+                { location: collector.source_location.join(':') },
+                time
+              )
+            else
+              collector.call
+            end
+          end
+        end
+
+        if ::Yabeda::Prometheus.debug_mode?
+          start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+          result = super
+          time = (Process.clock_gettime(Process::CLOCK_MONOTONIC) - start).round(3)
+
+          ::Yabeda.prometheus_exporter.render_duration.measure({}, time)
+          result
+        else
+          super
+        end
+      end
+
+      def ms
+        yield
       end
     end
   end

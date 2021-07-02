@@ -10,6 +10,14 @@ require "yabeda/prometheus/exporter"
 module Yabeda
   module Prometheus
     class << self
+      def debug_mode!
+        @debug_mode = true
+      end
+
+      def debug_mode?
+        !!@debug_mode
+      end
+
       def registry
         ::Prometheus::Client.registry
       end
