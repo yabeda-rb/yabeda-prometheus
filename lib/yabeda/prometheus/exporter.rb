@@ -18,7 +18,7 @@ module Yabeda
           @app.call(env)
         end
 
-        def start_metrics_server!(debug_mode: false)
+        def start_metrics_server!
           Thread.new do
             default_port = ENV.fetch("PORT", 9394)
             ::Rack::Handler::WEBrick.run(
@@ -71,10 +71,6 @@ module Yabeda
         else
           super
         end
-      end
-
-      def ms
-        yield
       end
     end
   end
