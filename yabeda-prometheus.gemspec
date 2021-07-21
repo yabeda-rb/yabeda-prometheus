@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 2.3"
 
   spec.add_dependency "prometheus-client", ">= 0.10", "< 3.0" # Known to work with 1.x and 2.x
-  spec.add_dependency "yabeda", "~> 0.5"
+  spec.add_dependency "yabeda", "~> 0.10"
   spec.add_dependency "rack"
 
   spec.add_development_dependency "bundler", "~> 2.0"
