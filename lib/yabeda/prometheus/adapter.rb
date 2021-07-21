@@ -88,7 +88,7 @@ module Yabeda
         group :prometheus_exporter
 
         histogram :render_duration,
-                  tags: %i[],
+                  tags: %i[], unit: :seconds,
                   buckets: [0.001, 0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5, 10],
                   comment: "Time required to render all metrics in Prometheus format"
       end
