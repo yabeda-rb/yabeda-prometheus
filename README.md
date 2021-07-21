@@ -48,6 +48,8 @@ And then execute:
 
     WEBrick will be launched in separate thread and will serve metrics on `/metrics` path.
 
+    > **ATTENTION**: Starting from Ruby 3.0 WEBrick isn't included with Ruby by default. You should either add `gem "webrick"` into your Gemfile or launch `Yabeda::Prometheus::Exporter.rack_app` with application server of your choice.
+
     See [yabeda-sidekiq] for example.
 
     Listening address is configured via `PROMETHEUS_EXPORTER_BIND` env variable (default is `0.0.0.0`).
