@@ -20,13 +20,17 @@ module Yabeda
 
         def start_metrics_server!
           Thread.new do
-            default_port = ENV.fetch("PORT", 9394)
-            ::Rack::Handler::WEBrick.run(
-              rack_app,
-              Host: ENV["PROMETHEUS_EXPORTER_BIND"] || "0.0.0.0",
-              Port: ENV.fetch("PROMETHEUS_EXPORTER_PORT", default_port),
-              AccessLog: [],
-            )
+            begin
+              default_port = ENV.fetch("PORT", 9394)
+              ::Rack::Handler::WEBrick.run(
+                rack_app,
+                Host: ENV["PROMETHEUS_EXPORTER_BIND"] || "0.0.0.0",
+                Port: ENV.fetch("PROMETHEUS_EXPORTER_PORT", default_port),
+                AccessLog: [],
+              )
+            rescue IOError
+              pp "#start_metrics_server! IOError: ", IOError
+            end
           end
         end
 
