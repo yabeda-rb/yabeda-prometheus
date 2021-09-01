@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Added
+
+- Ability to specify a logger instance for exporter web server. [@palkan]
+
+### Changed
+
+- Logging is disabled by default for exporter web server. [@palkan]
+
 ## 0.7.0 - 2021-07-21
 
 ### Added
@@ -128,3 +136,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [@alexander37137]: https://github.com/alexander37137 "Alexander Andreev"
 [@baarkerlounger]: https://github.com/baarkerlounger "Daniel Baark"
 [@dsalahutdinov]: https://github.com/dsalahutdinov "Dmitry Salahutdinov"
+[@palkan]: https://github.com/palkan "Vladimir Dementyev"
