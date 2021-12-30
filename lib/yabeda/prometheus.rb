@@ -18,7 +18,7 @@ module Yabeda
         @push_gateway ||= begin
           ::Prometheus::Client::Push.new(
             ENV.fetch("PROMETHEUS_JOB_NAME", "yabeda"),
-            nil,
+            ENV["PROMETHEUS_INSTANCE"],
             ENV.fetch("PROMETHEUS_PUSH_GATEWAY", "http://localhost:9091"),
           ).tap do |gateway|
             http = gateway.instance_variable_get(:@http)
