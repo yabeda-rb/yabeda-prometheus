@@ -7,13 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## 0.8.0 - 2021-12-30
+
 ### Added
 
-- Ability to specify a logger instance for exporter web server. [@palkan]
+- Ability to specify a logger instance for exporter web server. [@palkan], [#19](https://github.com/yabeda-rb/yabeda-prometheus/pull/19)
+- Ability to specify Prometheus instance value for push gateway. [@ollym], [#20](https://github.com/yabeda-rb/yabeda-prometheus/pull/20)
 
 ### Changed
 
-- Logging is disabled by default for exporter web server. [@palkan]
+- Logging is disabled by default for exporter web server. [@palkan], [#19](https://github.com/yabeda-rb/yabeda-prometheus/pull/19)
 
 ## 0.7.0 - 2021-07-21
 
@@ -137,3 +140,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [@baarkerlounger]: https://github.com/baarkerlounger "Daniel Baark"
 [@dsalahutdinov]: https://github.com/dsalahutdinov "Dmitry Salahutdinov"
 [@palkan]: https://github.com/palkan "Vladimir Dementyev"
+[@ollym]: https://github.com/ollym "Oliver Morgan"
