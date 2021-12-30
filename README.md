@@ -94,6 +94,13 @@ end
 
 These are only enabled in debug mode. See [Yabeda debugging metrics](https://github.com/yabeda-rb/yabeda#debugging-metrics) on how to enable it  (e.g. by specifying `YABEDA_DEBUG=true` in your environment variables).
 
+## Exporter logs
+
+By default, exporter web server logs are disabled. For example, you can plug in a Rails logger:
+
+```ruby
+Yabeda::Prometheus::Exporter.start_metrics_server! logger: Rails.application.logger
+```
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
