@@ -19,19 +19,31 @@ module Yabeda
           @app.call(env)
         end
 
-        def start_metrics_server!(**rack_app_options)
+        def start_metrics_server!(start_in_thread: true, **rack_app_options)
+          if start_in_thread
+            start_server_in_thread!(**rack_app_options)
+          else
+            start_server_in_process!(**rack_app_options)
+          end
+        end
+
+        def start_server_in_thread!(**rack_app_options)
           Thread.new do
-            default_port = ENV.fetch("PORT", 9394)
-            ::Rack::Handler::WEBrick.run(
-              rack_app(**rack_app_options),
-              Host: ENV["PROMETHEUS_EXPORTER_BIND"] || "0.0.0.0",
-              Port: ENV.fetch("PROMETHEUS_EXPORTER_PORT", default_port),
-              AccessLog: [],
-            )
+            start_app(**rack_app_options)
           end
         end
 
         def rack_app(exporter = self, logger: Logger.new(IO::NULL), use_deflater: true, **exporter_options)
+        def start_server_in_process!(**rack_app_options)
+          pid = Process.fork do
+            # re-configure yabeda since we're in a new process
+            Yabeda.configure!
+            start_app(**rack_app_options)
+          end
+          Process.detach(pid) if pid
+        end
+
+        def rack_app(exporter = self, path: "/metrics", logger: Logger.new(IO::NULL), use_deflater: false)
           ::Rack::Builder.new do
             use ::Rack::Deflater if use_deflater
             use ::Rack::CommonLogger, logger
@@ -39,6 +51,19 @@ module Yabeda
             use exporter, **exporter_options
             run NOT_FOUND_HANDLER
           end
+        end
+
+        def start_app(raise_start_error: true, **rack_app_options)
+          default_port = ENV.fetch("PORT", 9394)
+          ::Rack::Handler::WEBrick.run(
+            rack_app(**rack_app_options.remove(:raise_failed_to_start)),
+            Host: ENV["PROMETHEUS_EXPORTER_BIND"] || "0.0.0.0",
+            Port: ENV.fetch("PROMETHEUS_EXPORTER_PORT", default_port),
+            AccessLog: [],
+          )
+        rescue Errno::EADDRINUSE
+          puts "Failed to start server might be started by another process"
+          raise if raise_start_error
         end
       end
 
