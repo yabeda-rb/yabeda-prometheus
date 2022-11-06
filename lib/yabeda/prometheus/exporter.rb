@@ -56,7 +56,7 @@ module Yabeda
         def start_app(raise_start_error: true, **rack_app_options)
           default_port = ENV.fetch("PORT", 9394)
           ::Rack::Handler::WEBrick.run(
-            rack_app(**rack_app_options.remove(:raise_failed_to_start)),
+            rack_app(**rack_app_options),
             Host: ENV["PROMETHEUS_EXPORTER_BIND"] || "0.0.0.0",
             Port: ENV.fetch("PROMETHEUS_EXPORTER_PORT", default_port),
             AccessLog: [],
