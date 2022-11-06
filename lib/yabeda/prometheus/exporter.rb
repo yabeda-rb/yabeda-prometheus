@@ -62,7 +62,7 @@ module Yabeda
             AccessLog: [],
           )
         rescue Errno::EADDRINUSE
-          puts "Failed to start server might be started by another process"
+          puts "Yabeda prometheus exporter: Failed to start, server might be started by another process"
           raise if raise_start_error
         end
       end
