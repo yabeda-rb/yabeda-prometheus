@@ -30,8 +30,9 @@ module Yabeda
           end
         end
 
-        def rack_app(exporter = self, path: "/metrics", logger: Logger.new(IO::NULL))
+        def rack_app(exporter = self, path: "/metrics", logger: Logger.new(IO::NULL), use_deflater: true)
           ::Rack::Builder.new do
+            use ::Rack::Deflater if use_deflater
             use ::Rack::CommonLogger, logger
             use ::Rack::ShowExceptions
             use exporter, path: path
