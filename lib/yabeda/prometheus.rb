@@ -15,17 +15,12 @@ module Yabeda
       end
 
       def push_gateway
-        @push_gateway ||= begin
+        @push_gateway ||=
           ::Prometheus::Client::Push.new(
-            ENV.fetch("PROMETHEUS_JOB_NAME", "yabeda"),
-            ENV["PROMETHEUS_INSTANCE"],
-            ENV.fetch("PROMETHEUS_PUSH_GATEWAY", "http://localhost:9091"),
-          ).tap do |gateway|
-            http = gateway.instance_variable_get(:@http)
-            http.open_timeout = 5
-            http.read_timeout = 5
-          end
-        end
+            job: ENV.fetch("PROMETHEUS_JOB_NAME", "yabeda"),
+            gateway: ENV.fetch("PROMETHEUS_PUSH_GATEWAY", "http://localhost:9091"),
+            open_timeout: 5, read_timeout: 30,
+          )
       end
     end
   end
