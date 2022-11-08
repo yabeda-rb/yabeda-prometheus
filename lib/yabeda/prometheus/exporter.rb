@@ -14,7 +14,8 @@ module Yabeda
       class << self
         # Allows to use middleware as standalone rack application
         def call(env)
-          @app ||= new(NOT_FOUND_HANDLER, path: "/")
+          options = env.fetch("action_dispatch.request.path_parameters", {})
+          @app ||= new(NOT_FOUND_HANDLER, path: "/", **options)
           @app.call(env)
         end
 
@@ -30,12 +31,12 @@ module Yabeda
           end
         end
 
-        def rack_app(exporter = self, path: "/metrics", logger: Logger.new(IO::NULL), use_deflater: true)
+        def rack_app(exporter = self, logger: Logger.new(IO::NULL), use_deflater: true, **exporter_options)
           ::Rack::Builder.new do
             use ::Rack::Deflater if use_deflater
             use ::Rack::CommonLogger, logger
             use ::Rack::ShowExceptions
-            use exporter, path: path
+            use exporter, **exporter_options
             run NOT_FOUND_HANDLER
           end
         end
