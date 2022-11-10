@@ -35,8 +35,8 @@ module Yabeda
 
         def start_server_in_process!(**rack_app_options)
           pid = Process.fork do
-            # re-configure yabeda since we're in a new process
-            Yabeda.configure!
+            # configure yabeda if its not already configured
+            Yabeda.configure! unless Yabeda.already_configured?
             start_app(**rack_app_options)
           end
           Process.detach(pid) if pid
