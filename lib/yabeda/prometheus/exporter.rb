@@ -43,9 +43,8 @@ module Yabeda
           Process.detach(pid) if pid
         end
 
-        def rack_app(exporter = self, path: "/metrics", logger: Logger.new(IO::NULL), use_deflater: false)
+        def rack_app(exporter = self, path: "/metrics", logger: Logger.new(IO::NULL))
           ::Rack::Builder.new do
-            use ::Rack::Deflater if use_deflater
             use ::Rack::CommonLogger, logger
             use ::Rack::ShowExceptions
             use exporter, **exporter_options
@@ -53,7 +52,7 @@ module Yabeda
           end
         end
 
-        def start_app(raise_start_error: true, **rack_app_options)
+        def start_app(**rack_app_options)
           default_port = ENV.fetch("PORT", 9394)
           ::Rack::Handler::WEBrick.run(
             rack_app(**rack_app_options),
@@ -61,9 +60,6 @@ module Yabeda
             Port: ENV.fetch("PROMETHEUS_EXPORTER_PORT", default_port),
             AccessLog: [],
           )
-        rescue Errno::EADDRINUSE
-          puts "Yabeda prometheus exporter: Failed to start, server might be started by another process"
-          raise if raise_start_error
         end
       end
 
