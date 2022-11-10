@@ -33,7 +33,6 @@ module Yabeda
           end
         end
 
-        def rack_app(exporter = self, logger: Logger.new(IO::NULL), use_deflater: true, **exporter_options)
         def start_server_in_process!(**rack_app_options)
           pid = Process.fork do
             # re-configure yabeda since we're in a new process
@@ -43,8 +42,9 @@ module Yabeda
           Process.detach(pid) if pid
         end
 
-        def rack_app(exporter = self, path: "/metrics", logger: Logger.new(IO::NULL))
+        def rack_app(exporter = self, logger: Logger.new(IO::NULL), use_deflater: true, **exporter_options)
           ::Rack::Builder.new do
+            use ::Rack::Deflater if use_deflater
             use ::Rack::CommonLogger, logger
             use ::Rack::ShowExceptions
             use exporter, **exporter_options
