@@ -73,6 +73,22 @@ module Yabeda
       raise UndeclaredMetricTags.new(build_name(metric), e)
     end
 
+    def register_summary!(metric)
+      validate_metric!(metric)
+      registry.summary(
+        build_name(metric),
+        docstring: metric.comment,
+        labels: Array(metric.tags),
+        store_settings: store_settings(metric),
+      )
+    end
+
+    def perform_summary_observe!(metric, tags, value)
+      registry.get(build_name(metric)).observe(value, labels: tags)
+    rescue ::Prometheus::Client::LabelSetValidator::InvalidLabelSetError => e
+      raise UndeclaredMetricTags.new(build_name(metric), e)
+    end
+
     def build_name(metric)
       [metric.group, metric.name, metric.unit].compact.join('_').to_sym
     end

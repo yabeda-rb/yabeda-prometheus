@@ -8,6 +8,8 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 gemspec
 
 group :development, :test do
+  gem "yabeda", ">= 0.12", github: "yabeda-rb/yabeda", branch: "master"
+
   gem "pry"
   gem "pry-byebug", platform: :mri
 
