@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## 0.9.0 - 2023-07-28
+
+### Added
+
+- Support for summary metric type (Yabeda 0.12+ is required). [@Envek]
+- Metrics endpoint response compression with Rack Deflater. [@etsenake], ([#23](https://github.com/yabeda-rb/yabeda-prometheus/pull/23)
+
+### Changed
+
+- prometheus-client 3.x or 4.x is required. [@Envek]
+
 ## 0.8.0 - 2021-12-30
 
 ### Added
@@ -141,3 +152,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [@dsalahutdinov]: https://github.com/dsalahutdinov "Dmitry Salahutdinov"
 [@palkan]: https://github.com/palkan "Vladimir Dementyev"
 [@ollym]: https://github.com/ollym "Oliver Morgan"
+[@etsenake]: https://github.com/etsenake "Josh Etsenake"
