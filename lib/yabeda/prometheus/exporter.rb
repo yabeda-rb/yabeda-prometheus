@@ -22,7 +22,7 @@ module Yabeda
         def start_metrics_server!(**rack_app_options)
           Thread.new do
             default_port = ENV.fetch("PORT", 9394)
-            ::Rack::Handler::WEBrick.run(
+            rack_handler.run(
               rack_app(**rack_app_options),
               Host: ENV["PROMETHEUS_EXPORTER_BIND"] || "0.0.0.0",
               Port: ENV.fetch("PROMETHEUS_EXPORTER_PORT", default_port),
@@ -39,6 +39,18 @@ module Yabeda
             use exporter, **exporter_options
             run NOT_FOUND_HANDLER
           end
+        end
+
+        def rack_handler
+          if Gem.loaded_specs['rack']&.version&.>= Gem::Version.new('3.0')
+            require 'rackup'
+            ::Rackup::Handler::WEBrick
+          else
+            ::Rack::Handler::WEBrick
+          end
+        rescue LoadError
+          warn 'Please add gems rackup and webrick to your Gemfile to expose Yabeda metrics from prometheus-mmap'
+          ::Rack::Handler::WEBrick
         end
       end
 
