@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## 0.9.1 - 2024-01-04
+
+### Fixed
+
+- Compatibility with Rack 3 and Rack 2. [#27](https://github.com/yabeda-rb/yabeda-prometheus/pull/27) by [@aroop][].
+
 ## 0.9.0 - 2023-07-28
 
 ### Added
@@ -153,3 +159,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [@palkan]: https://github.com/palkan "Vladimir Dementyev"
 [@ollym]: https://github.com/ollym "Oliver Morgan"
 [@etsenake]: https://github.com/etsenake "Josh Etsenake"
+[@aroop]: https://github.com/aroop "Ajay Guthikonda"
