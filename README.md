@@ -46,7 +46,7 @@ And then execute:
     end
     ```
 
-    Additional options (like `:port`) are also accepted and forwarded to [Prometheys Exporter](https://github.com/prometheus/client_ruby/blob/main/lib/prometheus/middleware/exporter.rb) middleware.
+    Additional options (like `:port`) are also accepted and forwarded to [Prometheus Exporter](https://github.com/prometheus/client_ruby/blob/main/lib/prometheus/middleware/exporter.rb) middleware.
 
  2. Run web-server from long-running processes (delayed jobs, …):
 
