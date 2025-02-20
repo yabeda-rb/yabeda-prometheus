@@ -19,7 +19,7 @@ module Yabeda
           @app.call(env)
         end
 
-        def start_metrics_server!(**rack_app_options)
+        def start_metrics_server!(webrick_options: {}, **rack_app_options)
           Thread.new do
             default_port = ENV.fetch("PORT", 9394)
             rack_handler.run(
@@ -27,6 +27,7 @@ module Yabeda
               Host: ENV["PROMETHEUS_EXPORTER_BIND"] || "0.0.0.0",
               Port: ENV.fetch("PROMETHEUS_EXPORTER_PORT", default_port),
               AccessLog: [],
+              **webrick_options,
             )
           end
         end
