@@ -2,6 +2,7 @@
 
 require "prometheus/middleware/exporter"
 require "rack"
+require "logger"
 
 module Yabeda
   module Prometheus
